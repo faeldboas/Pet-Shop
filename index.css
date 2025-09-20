@@ -1,0 +1,301 @@
+/* Botão flutuante do WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: box-shadow 0.2s;
+}
+.whatsapp-float:hover {
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.4);
+  background-color: #20ba5a;
+}
+/* Estilo geral */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #60c2b8;
+  color: #333;
+}
+
+header {
+  background: #ff9800;
+  color: rgb(0, 0, 0);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #333;
+  background: #ff9800;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: url('imgs/banner.png') no-repeat center center/cover;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4); /* camada escura para contraste */
+  z-index: 2;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.banner-content h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.btn-banner {
+  display: inline-block;
+  background: #00c4cc;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn-banner:hover {
+  background: #009aa0;
+  box-shadow: 0 8px 24px rgba(0, 196, 204, 0.3), 0 1.5px 4px rgba(0,0,0,0.12);
+  transform: scale(1.07) translateY(-2px);
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+
+.banner h2 {
+  font-size: 8.5rem;
+}
+
+/* Serviços e Produtos */
+.servicos {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.servicos h2 {
+  margin-bottom: 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff3e0;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #e68900;
+}
+
+/* Contato */
+.contato {
+  padding: 50px 20px;
+  background: #fce4ec;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  gap: 10px;
+}
+
+input, textarea, button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  background: #ff9800;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #e68900;
+  box-shadow: 0 8px 24px rgba(230, 137, 0, 0.25), 0 1.5px 4px rgba(0,0,0,0.12);
+  transform: scale(1.07) translateY(-2px);
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+/* Rodapé */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+footer p {
+  margin: 0;
+}
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* ocupa 80% da altura da tela */
+  background: url('imgs/banner.png') no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4); /* camada escura */
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.banner-content h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.banner-content p {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+}
+
+.btn-banner {
+  display: inline-block;
+  background: #58a9b7;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-banner:hover {
+  background: #e68900;
+}
+/* Logo no menu */
+.logo img {
+  height: 60px; /* tamanho da logo */
+  width: auto;
+  display: block;
+  border-radius: 50%;
+}
+header {
+  background: #60c2b8;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s;
+}
+
+body {
+  padding-top: 90px; /* Compensa a altura do header fixo */
+}
