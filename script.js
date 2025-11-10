@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span style="white-space: pre-line;">${mensagem}</span>
                     <button onclick="this.closest('#alerta-customizado').remove()" 
                             style="background: none; border: none; color: ${cor.texto}; 
-                                   font-size: 18px; cursor: pointer; margin-left: 10px;">×</button>
+                                   font-size: 18px; cursor: pointer; margin-left: 10px;"></button>
                 </div>
             </div>
         `;

@@ -1,0 +1,750 @@
+/* Botão flutuante do WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: box-shadow 0.2s;
+}
+
+.whatsapp-float:hover {
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: #20ba5a;
+}
+
+/* Estilo geral */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #60c2b8;
+  color: #333;
+}
+
+header {
+  background: rgba(96, 194, 184, 0.95);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1001;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/* Navegação */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: #60c2b8;
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: url('imgs/banner.png') no-repeat center center/cover;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* camada escura para contraste */
+  z-index: 2;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.banner-content h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.banner-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.btn-banner {
+  display: inline-block;
+  background: #00c4cc;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn-banner:hover {
+  background: #009aa0;
+  box-shadow: 0 8px 24px rgba(0, 196, 204, 0.3), 0 1.5px 4px rgba(0, 0, 0, 0.12);
+  transform: scale(1.07) translateY(-2px);
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+
+.banner h2 {
+  font-size: 8.5rem;
+}
+
+/* Seções melhoradas */
+.section-header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: white;
+}
+
+.section-header h2 {
+  font-size: 2.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #60c2b8, #4a9d96);
+  border-radius: 2px;
+}
+
+.section-header p {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Serviços - Grid Premium */
+.servicos {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 0 20px 60px;
+}
+
+.services-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #60c2b8, #4a9d96);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: #60c2b8;
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.service-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.service-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #60c2b8;
+  margin-bottom: 20px;
+}
+
+.service-btn {
+  background: linear-gradient(135deg, #60c2b8, #4a9d96);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.service-btn:hover {
+  background: linear-gradient(135deg, #4a9d96, #3d8078);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(96, 194, 184, 0.3);
+}
+
+/* Produtos - Layout Diferenciado */
+.produtos {
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  padding: 60px 20px;
+}
+
+.produtos-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.produtos-header h2 {
+  font-size: 2.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.produtos-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #e91e63, #ad1457);
+  border-radius: 2px;
+}
+
+.products-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #e91e63, #ad1457);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.product-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.product-card h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.product-card p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.product-btn {
+  background: linear-gradient(135deg, #e91e63, #ad1457);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.product-btn:hover {
+  background: linear-gradient(135deg, #ad1457, #880e4f);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff3e0;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #e68900;
+}
+
+/* Contato */
+.contato {
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  gap: 10px;
+}
+
+input,
+textarea,
+button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  background: #ff9800;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #e68900;
+  box-shadow: 0 8px 24px rgba(230, 137, 0, 0.25), 0 1.5px 4px rgba(0, 0, 0, 0.12);
+  transform: scale(1.07) translateY(-2px);
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+/* Rodapé */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  /* ocupa 80% da altura da tela */
+  background: url('imgs/banner.png') no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* camada escura */
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.banner-content h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.banner-content p {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+}
+
+.btn-banner {
+  display: inline-block;
+  background: #58a9b7;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-banner:hover {
+  background: #e68900;
+}
+
+/* Logo no menu */
+.logo img {
+  height: 60px;
+  /* tamanho da logo */
+  width: auto;
+  display: block;
+  border-radius: 50%;
+}
+
+header {
+  background: #60c2b8;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
+}
+
+body {
+  padding-top: 81px;
+  /* Compensa a altura do header fixo */
+}
+
+/* Contato */
+.contato {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  text-align: center;
+}
+
+.contato h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.contato p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.contato-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contato-info {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: left;
+}
+
+.contato-info h3 {
+  color: #60c2b8;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contato-info p {
+  margin: 12px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.contato-form {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contato-form h3 {
+  color: #60c2b8;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+input,
+textarea,
+select,
+button {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #60c2b8;
+  box-shadow: 0 0 0 3px rgba(96, 194, 184, 0.1);
+}
+
+select {
+  cursor: pointer;
+}
+
+button {
+  background: linear-gradient(135deg, #60c2b8 0%, #4a9d96 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #4a9d96 0%, #3d8078 100%);
+  box-shadow: 0 8px 25px rgba(96, 194, 184, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Responsividade atualizada */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 10px 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  nav ul {
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  body {
+    padding-top: 130px;
+  }
+
+  .banner-content h2 {
+    font-size: 2.5rem;
+  }
+
+  .banner-content p {
+    font-size: 1.1rem;
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contato-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .banner {
+    height: 60vh;
+  }
+
+  .section-header h2,
+  .produtos-header h2,
+  .contato h2 {
+    font-size: 2.2rem;
+  }
+
+  .services-grid,
+  .products-grid {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 8px 10px;
+  }
+
+  nav ul {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+
+  body {
+    padding-top: 140px;
+  }
+
+  .banner-content h2 {
+    font-size: 2rem;
+  }
+
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .service-card,
+  .product-card {
+    padding: 20px 15px;
+  }
+
+  .whatsapp-float img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
