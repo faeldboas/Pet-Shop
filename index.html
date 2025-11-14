@@ -9,19 +9,21 @@
 </head>
 
 <body>
-  <!-- Cabeçalho -->
   <!-- Botão flutuante do WhatsApp -->
   <a href="https://wa.me/5562984580527" class="whatsapp-float" target="_blank" rel="noopener"
     title="Fale conosco no WhatsApp">
     <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp"
       style="width: 50px; height: 50px;">
   </a>
+
+  <!-- Header -->
   <header>
     <div class="logo">
       <img src="imgs/Gemini_Generated_Image_xik61axik61axik6.png" alt="Logo Osvaldo PetShop">
     </div>
     <nav>
       <ul>
+        <li><a href="#home">Início</a></li>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#produtos">Produtos</a></li>
         <li><a href="#contato">Contato</a></li>
@@ -29,8 +31,6 @@
     </nav>
   </header>
 
-  <!-- Banner -->
-  <!-- Banner -->
   <!-- Banner -->
   <section class="banner">
     <div class="overlay"></div>
@@ -40,6 +40,7 @@
       <a href="#contato" class="btn-banner">Agende seu horário</a>
     </div>
   </section>
+
   <!-- Serviços -->
   <section class="servicos" id="servicos">
     <div class="section-header">
@@ -54,8 +55,7 @@
         <p>Banho relaxante, tosa profissional, corte de unhas, limpeza de ouvidos e perfumação. Seu pet fica lindo e
           cheiroso!</p>
         <div class="service-price">A partir de R$ 35,00</div>
-        <a href="https://wa.me/5562984580527?text=Olá! Gostaria de agendar um banho e tosa." class="service-btn">Agendar
-          Agora</a>
+        <a href="#contato" class="service-btn">Agendar Agora</a>
       </div>
 
       <div class="service-card">
@@ -64,8 +64,7 @@
         <p>Atendimento veterinário completo com profissionais experientes. Exames, vacinas, tratamentos e emergências.
         </p>
         <div class="service-price">A partir de R$ 80,00</div>
-        <a href="https://wa.me/5562984580527?text=Olá! Preciso agendar uma consulta veterinária."
-          class="service-btn">Consultar</a>
+        <a href="#contato" class="service-btn">Consultar</a>
       </div>
 
       <div class="service-card">
@@ -73,8 +72,7 @@
         <h3>Hotelzinho Pet</h3>
         <p>Hospedagem segura e confortável para seu pet. Ambiente climatizado, recreação e cuidados especiais 24h.</p>
         <div class="service-price">R$ 45,00 / dia</div>
-        <a href="https://wa.me/5562984580527?text=Olá! Gostaria de informações sobre o hotelzinho."
-          class="service-btn">Reservar</a>
+        <a href="#contato" class="service-btn">Reservar</a>
       </div>
     </div>
   </section>
@@ -86,77 +84,103 @@
       <p>Os melhores produtos para o bem-estar do seu companheiro</p>
     </div>
 
-    <div class="products-grid">
-      <div class="product-card">
-        <span class="product-icon">🦴</span>
-        <h3>Rações Premium</h3>
-        <p>Rações super premium das melhores marcas para todas as idades</p>
-        <a href="https://wa.me/5562984580527?text=Olá! Gostaria de ver as rações disponíveis." class="product-btn">Ver
-          Rações</a>
-      </div>
-
-      <div class="product-card">
-        <span class="product-icon">🎾</span>
-        <h3>Brinquedos</h3>
-        <p>Brinquedos educativos e divertidos para entreter seu pet</p>
-        <a href="https://wa.me/5562984580527?text=Olá! Quero ver os brinquedos disponíveis." class="product-btn">Ver
-          Brinquedos</a>
-      </div>
-
-      <div class="product-card">
-        <span class="product-icon">🏠</span>
-        <h3>Camas & Casinhas</h3>
-        <p>Conforto e aconchego para o descanso do seu melhor amigo</p>
-        <a href="https://wa.me/5562984580527?text=Olá! Gostaria de ver camas e casinhas." class="product-btn">Ver
-          Produtos</a>
-      </div>
-
-      <div class="product-card">
-        <span class="product-icon">🎀</span>
-        <h3>Coleiras & Guias</h3>
-        <p>Acessórios elegantes e seguros para passeios especiais</p>
-        <a href="https://wa.me/5562984580527?text=Olá! Quero ver coleiras e guias." class="product-btn">Ver
-          Acessórios</a>
-      </div>
+    <div class="products-grid" id="products-grid">
+      <!-- Produtos serão carregados aqui dinamicamente -->
     </div>
   </section>
-  <!-- Contato -->
+
+  <!-- Contato com Agendamento -->
   <section class="contato" id="contato">
-    <h2>Entre em Contato</h2>
-    <p>Agende seu horário ou tire suas dúvidas conosco!</p>
+    <h2>Entre em Contato e Agende</h2>
+    <p>Escolha a data e horário ideal para seu pet!</p>
 
     <div class="contato-container">
+      <!-- Informações de Contato -->
       <div class="contato-info">
         <h3>📍 Nossos Dados</h3>
         <p><strong>📞 Telefone:</strong> (62) 98458-0527</p>
         <p><strong>📧 E-mail:</strong> contato@osvaldopetshop.com</p>
         <p><strong>📍 Endereço:</strong> Rua dos Pets, 123 - Goiânia/GO</p>
-        <p><strong>🕒 Horários:</strong> Segunda a Sábado, 8h às 18h</p>
+        <p><strong>🕐 Horários:</strong> Segunda a Sábado, 8h às 18h</p>
+        
+        <div class="info-destaque">
+          <h4>💡 Como funciona?</h4>
+          <ol>
+            <li>Escolha a data no calendário</li>
+            <li>Selecione o horário disponível</li>
+            <li>Preencha seus dados</li>
+            <li>Confirme via WhatsApp!</li>
+          </ol>
+        </div>
       </div>
 
-  <form class="contato-form" id="formulario-contato">
-        <h3>📝 Envie sua Mensagem</h3>
-        <input type="text" id="nome" placeholder="Seu nome completo" required>
-        <input type="email" id="email" placeholder="Seu melhor e-mail" required>
-        <input type="tel" id="telefone" placeholder="Seu WhatsApp">
-        <select id="servico" required>
-            <option value="">Selecione o serviço desejado</option>
+      <!-- Calendário e Formulário -->
+      <div class="contato-agendamento">
+        <h3>📅 Selecione Data e Horário</h3>
+        
+        <!-- Calendário -->
+        <div class="calendario">
+          <div class="calendario-header">
+            <button onclick="mudarMes(-1)" type="button">◀</button>
+            <h4 id="mesAno"></h4>
+            <button onclick="mudarMes(1)" type="button">▶</button>
+          </div>
+          <div class="calendario-dias">
+            <div class="dia-label">Dom</div>
+            <div class="dia-label">Seg</div>
+            <div class="dia-label">Ter</div>
+            <div class="dia-label">Qua</div>
+            <div class="dia-label">Qui</div>
+            <div class="dia-label">Sex</div>
+            <div class="dia-label">Sáb</div>
+          </div>
+          <div class="calendario-dias" id="diasCalendario"></div>
+        </div>
+
+        <!-- Horários Disponíveis -->
+        <div class="horarios-disponiveis" id="horariosSection" style="display: none;">
+          <h4>⏰ Horários Disponíveis</h4>
+          <div class="horarios-grid" id="horariosGrid"></div>
+        </div>
+
+        <!-- Formulário de Agendamento -->
+        <form class="contato-form" id="formulario-agendamento" style="display: none;">
+          <h4>✍️ Complete seus Dados</h4>
+          
+          <div class="dados-selecionados" id="dadosSelecionados">
+            <!-- Dados da data/hora serão exibidos aqui -->
+          </div>
+
+          <input type="text" id="nomeTutor" placeholder="Seu nome completo *" required>
+          <input type="text" id="nomePet" placeholder="Nome do seu pet *" required>
+          <input type="tel" id="telefone" placeholder="Seu WhatsApp (com DDD) *" required>
+          
+          <select id="servico" required>
+            <option value="">Selecione o serviço desejado *</option>
             <option value="Banho & Tosa">Banho & Tosa</option>
             <option value="Consulta Veterinária">Consulta Veterinária</option>
             <option value="Hotelzinho">Hotelzinho</option>
-            <option value="Produtos">Produtos</option>
+            <option value="Vacinação">Vacinação</option>
             <option value="Outros serviços">Outros serviços</option>
-        </select>
-        <textarea id="mensagem" placeholder="Conte-nos mais sobre o que você precisa..." rows="4" required></textarea>
-        <button type="submit" class="form-button">Enviar Mensagem</button>
-    </form>
+          </select>
+          
+          <textarea id="observacoes" placeholder="Observações sobre seu pet (raça, porte, cuidados especiais...)" rows="3"></textarea>
+          
+          <button type="submit" class="form-button">Confirmar Agendamento via WhatsApp</button>
+        </form>
+      </div>
     </div>
   </section>
-   <script src="script.js"></script>
-</body>
 
   <!-- Rodapé -->
   <footer>
     <p>&copy; 2025 Osvaldo PetShop - Todos os direitos reservados</p>
     <p>Desenvolvido com ❤️ para nossos amigos de quatro patas</p>
   </footer>
+
+  <!-- Scripts -->
+  <script src="api-client.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
