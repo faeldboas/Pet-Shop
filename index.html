@@ -9,14 +9,8 @@
 </head>
 
 <body>
-  <!-- Botão flutuante do WhatsApp -->
-  <a href="https://wa.me/5562984580527" class="whatsapp-float" target="_blank" rel="noopener"
-    title="Fale conosco no WhatsApp">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp"
-      style="width: 50px; height: 50px;">
-  </a>
+  <script src="script.js"></script>
 
-  <!-- Header -->
   <header>
     <div class="logo">
       <img src="imgs/Gemini_Generated_Image_xik61axik61axik6.png" alt="Logo Osvaldo PetShop">
@@ -31,7 +25,6 @@
     </nav>
   </header>
 
-  <!-- Banner -->
   <section class="banner">
     <div class="overlay"></div>
     <div class="banner-content">
@@ -41,7 +34,6 @@
     </div>
   </section>
 
-  <!-- Serviços -->
   <section class="servicos" id="servicos">
     <div class="section-header">
       <h2>Nossos Serviços</h2>
@@ -77,7 +69,6 @@
     </div>
   </section>
 
-  <!-- Produtos -->
   <section class="produtos" id="produtos">
     <div class="produtos-header">
       <h2>Nossos Produtos</h2>
@@ -85,17 +76,37 @@
     </div>
 
     <div class="products-grid" id="products-grid">
-      <!-- Produtos serão carregados aqui dinamicamente -->
-    </div>
-  </section>
+      </div>
+    
+    <div class="carrinho-container" style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+        <div class="carrinho-display">
+            <h3>🛒 Seu Carrinho</h3>
+            <ul id="carrinho-lista" style="list-style: none; padding: 0;">
+                </ul>
+            <div id="carrinho-total" style="font-weight: bold; font-size: 1.2rem; margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                Total: R$ 0,00
+            </div>
+        </div>
 
-  <!-- Contato com Agendamento -->
+        <div id="finalizar-compra-section" style="display: none; padding-top: 20px; border-top: 1px solid #ccc; margin-top: 20px;">
+            <h4>Informações para Entrega</h4>
+            <form id="form-finalizar-compra" style="display: flex; flex-direction: column; gap: 10px;">
+                <input type="text" id="nomeCliente" name="nome" placeholder="Seu nome completo *" required style="padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                <input type="tel" id="telefoneCliente" name="telefone" placeholder="Seu telefone (com DDD) *" required style="padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                
+                <button type="submit" class="form-button" style="margin-top: 15px; padding: 10px; background-color: #006064; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                    Finalizar Compra e Enviar Pedido
+                </button>
+            </form>
+        </div>
+    </div>
+    </section>
+
   <section class="contato" id="contato">
     <h2>Entre em Contato e Agende</h2>
     <p>Escolha a data e horário ideal para seu pet!</p>
 
     <div class="contato-container">
-      <!-- Informações de Contato -->
       <div class="contato-info">
         <h3>📍 Nossos Dados</h3>
         <p><strong>📞 Telefone:</strong> (62) 98458-0527</p>
@@ -114,11 +125,9 @@
         </div>
       </div>
 
-      <!-- Calendário e Formulário -->
       <div class="contato-agendamento">
         <h3>📅 Selecione Data e Horário</h3>
         
-        <!-- Calendário -->
         <div class="calendario">
           <div class="calendario-header">
             <button onclick="mudarMes(-1)" type="button">◀</button>
@@ -137,19 +146,16 @@
           <div class="calendario-dias" id="diasCalendario"></div>
         </div>
 
-        <!-- Horários Disponíveis -->
         <div class="horarios-disponiveis" id="horariosSection" style="display: none;">
           <h4>⏰ Horários Disponíveis</h4>
           <div class="horarios-grid" id="horariosGrid"></div>
         </div>
 
-        <!-- Formulário de Agendamento -->
         <form class="contato-form" id="formulario-agendamento" style="display: none;">
           <h4>✍️ Complete seus Dados</h4>
           
           <div class="dados-selecionados" id="dadosSelecionados">
-            <!-- Dados da data/hora serão exibidos aqui -->
-          </div>
+            </div>
 
           <input type="text" id="nomeTutor" placeholder="Seu nome completo *" required>
           <input type="text" id="nomePet" placeholder="Nome do seu pet *" required>
@@ -166,21 +172,17 @@
           
           <textarea id="observacoes" placeholder="Observações sobre seu pet (raça, porte, cuidados especiais...)" rows="3"></textarea>
           
-          <button type="submit" class="form-button">Confirmar Agendamento via WhatsApp</button>
+          <button type="submit" class="form-button">Confirmar Agendamento</button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- Rodapé -->
   <footer>
     <p>&copy; 2025 Osvaldo PetShop - Todos os direitos reservados</p>
     <p>Desenvolvido com ❤️ para nossos amigos de quatro patas</p>
   </footer>
 
-  <!-- Scripts -->
-  <script src="api-client.js"></script>
-  <script src="script.js"></script>
-</body>
+  </body>
 
 </html>

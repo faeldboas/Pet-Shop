@@ -1,26 +1,3 @@
-/* Botão flutuante do WhatsApp */
-.whatsapp-float {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 30px;
-  right: 30px;
-  background-color: #25d366;
-  color: #fff;
-  border-radius: 50%;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: box-shadow 0.2s;
-}
-
-.whatsapp-float:hover {
-  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
-  background-color: #20ba5a;
-}
-
 /* Estilo geral */
 * {
   margin: 0;
@@ -62,18 +39,6 @@ header h1 {
   margin: 0;
 }
 
-/* Logo no menu */
-.logo img {
-  height: 60px;
-  width: auto;
-  display: block;
-  border-radius: 50%;
-}
-
-body {
-  padding-top: 81px;
-}
-
 /* Navegação */
 nav ul {
   list-style: none;
@@ -99,6 +64,7 @@ nav a:hover {
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
+
 /* Banner */
 .banner {
   position: relative;
@@ -111,6 +77,16 @@ nav a:hover {
   background: url('imgs/banner.png') no-repeat center center/cover;
 }
 
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -118,6 +94,7 @@ nav a:hover {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
+  /* camada escura para contraste */
   z-index: 2;
 }
 
@@ -149,15 +126,20 @@ nav a:hover {
   font-weight: bold;
   text-decoration: none;
   transition: background 0.3s;
-  margin: 5px;
 }
 
 .btn-banner:hover {
   background: #009aa0;
-  box-shadow: 0 8px 24px rgba(0, 196, 204, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 196, 204, 0.3), 0 1.5px 4px rgba(0, 0, 0, 0.12);
   transform: scale(1.07) translateY(-2px);
   color: #fff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+
+.banner h2 {
+  font-size: 8.5rem;
 }
 
 /* Seções melhoradas */
@@ -282,115 +264,45 @@ nav a:hover {
 
 /* Produtos - Layout Diferenciado */
 .produtos {
-  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  /* Fundo neutro após remover o gradiente rosa antigo */
+  background: white; 
   padding: 60px 20px;
-}
-
-.produtos-header {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.produtos-header h2 {
-  font-size: 2.8rem;
-  color: #333;
-  margin-bottom: 15px;
-  position: relative;
-}
-
-.produtos-header h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(135deg, #e91e63, #ad1457);
-  border-radius: 2px;
 }
 
 .products-grid {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
 }
 
-.product-card {
-  background: white;
-  border-radius: 15px;
-  padding: 25px 20px;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* * ATENÇÃO: 
+ * Estilos de produtos agora estão INLINE no script.js 
+ * para maior controle dinâmico.
+ */
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.product-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(135deg, #e91e63, #ad1457);
+.card {
+  background: #fff3e0;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
 }
 
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+.card:hover {
+  transform: scale(1.05);
+  background: #e68900;
 }
 
-.product-icon {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-  display: block;
-}
-
-.product-card h3 {
-  font-size: 1.3rem;
-  color: #333;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.product-card p {
-  color: #666;
-  font-size: 0.95rem;
-  margin-bottom: 15px;
-}
-
-.product-price {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #e91e63;
-  margin: 15px 0;
-}
-
-.product-btn {
-  background: linear-gradient(135deg, #e91e63, #ad1457);
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.product-btn:hover {
-  background: linear-gradient(135deg, #ad1457, #880e4f);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
-}
-
-/* Contato com Calendário */
 .contato {
   padding: 60px 20px;
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
@@ -482,6 +394,36 @@ nav a:hover {
   font-size: 1.5rem;
   margin-bottom: 20px;
   text-align: center;
+}
+
+/* Produtos - Layout Diferenciado */
+.produtos {
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  padding: 60px 20px;
+}
+
+.produtos-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.produtos-header h2 {
+  font-size: 2.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.produtos-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #e91e63, #ad1457);
+  border-radius: 2px;
 }
 
 /* Calendário */
@@ -675,19 +617,213 @@ select {
   transform: translateY(-2px);
 }
 
+/* Contato */
+.contato {
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  gap: 10px;
+}
+
+button {
+  background: #ff9800;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #e68900;
+  box-shadow: 0 8px 24px rgba(230, 137, 0, 0.25), 0 1.5px 4px rgba(0, 0, 0, 0.12);
+  transform: scale(1.07) translateY(-2px);
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
 /* Rodapé */
 footer {
   background: #333;
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 15px;
 }
 
 footer p {
-  margin: 5px 0;
+  margin: 0;
 }
 
-/* Responsividade */
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  /* ocupa 80% da altura da tela */
+  background: url('imgs/banner.png') no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* camada escura */
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.banner-content h2 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.banner-content p {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+}
+
+.btn-banner {
+  display: inline-block;
+  background: #58a9b7;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-banner:hover {
+  background: #e68900;
+}
+
+/* Logo no menu */
+.logo img {
+  height: 60px;
+  /* tamanho da logo */
+  width: auto;
+  display: block;
+  border-radius: 50%;
+}
+
+header {
+  background: #60c2b8;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
+}
+
+body {
+  padding-top: 81px;
+  /* Compensa a altura do header fixo */
+}
+
+/* Contato */
+.contato {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  text-align: center;
+}
+
+.contato h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.contato p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.contato-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contato-info {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: left;
+}
+
+.contato-info h3 {
+  color: #60c2b8;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contato-info p {
+  margin: 12px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.contato-form {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contato-form h3 {
+  color: #60c2b8;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Os estilos de input, textarea, select e button foram movidos para a área de Agendamento */
+
+/* Responsividade atualizada */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -699,7 +835,6 @@ footer p {
   nav ul {
     margin-top: 10px;
     justify-content: center;
-    flex-wrap: wrap;
   }
 
   body {
@@ -714,13 +849,14 @@ footer p {
     font-size: 1.1rem;
   }
 
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .contato-container {
     flex-direction: column;
     gap: 20px;
-  }
-
-  .contato-agendamento {
-    min-width: 100%;
   }
 
   .banner {
@@ -728,27 +864,14 @@ footer p {
   }
 
   .section-header h2,
-  .produtos-header h2,
   .contato h2 {
     font-size: 2.2rem;
   }
-
+  
   .services-grid,
   .products-grid {
     grid-template-columns: 1fr;
     padding: 0 10px;
-  }
-
-  .calendario-dias {
-    gap: 5px;
-  }
-
-  .dia {
-    font-size: 0.9rem;
-  }
-
-  .horarios-grid {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   }
 }
 
@@ -779,29 +902,8 @@ footer p {
     font-size: 2rem;
   }
 
-  .whatsapp-float {
-    width: 50px;
-    height: 50px;
-    bottom: 20px;
-    right: 20px;
-  }
-
   .service-card,
   .product-card {
     padding: 20px 15px;
-  }
-
-  .whatsapp-float img {
-    width: 40px !important;
-    height: 40px !important;
-  }
-
-  .calendario-header {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .calendario-header button {
-    width: 100%;
   }
 }

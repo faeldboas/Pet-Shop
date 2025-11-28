@@ -5,114 +5,137 @@ console.log('Script carregado com sucesso!');
 // ============================================
 let mesAtual = new Date().getMonth();
 let anoAtual = new Date().getFullYear();
-let diaSelecionado = null;
+// Armazena a data selecionada como um objeto Date para melhor controle
+let dataSelecionada = null; 
 let horarioSelecionado = null;
 let produtosLoja = [];
-
-// API Client (se estiver usando backend)
-const api = typeof APIClient !== 'undefined' ? new APIClient() : null;
+let carrinho = [];
 
 // ============================================
-// CARREGA PRODUTOS (DO BACKEND OU PADRÃO)
+// FUNÇÕES DE PRODUTOS (Carregamento e Exibição)
 // ============================================
+
 async function carregarProdutos() {
-  try {
-    if (api) {
-      // Tenta carregar do backend
-      produtosLoja = await api.getProdutos(true); // apenas ativos
-      console.log('✅ Produtos carregados da API:', produtosLoja.length);
-    } else {
-      // Usa produtos padrão
-      usarProdutosPadrao();
-    }
-  } catch (error) {
-    console.error('Erro ao carregar produtos:', error);
-    usarProdutosPadrao();
-  }
-  
-  renderizarProdutos();
-}
+    try {
+        // Tenta carregar do PHP. Caminho: 'php/get_produtos.php'
+        const response = await fetch('php/get_produtos.php');
 
-function usarProdutosPadrao() {
-  produtosLoja = [
-    {
-      id: 1,
-      nome: 'Ração Premium Cães Adultos',
-      descricao: 'Ração super premium 15kg para cães adultos',
-      preco: 189.90,
-      emoji: '🦴'
-    },
-    {
-      id: 2,
-      nome: 'Ração Premium Gatos',
-      descricao: 'Ração super premium 10kg para gatos adultos',
-      preco: 159.90,
-      emoji: '🐱'
-    },
-    {
-      id: 3,
-      nome: 'Brinquedo Interativo',
-      descricao: 'Brinquedo educativo com dispenser de petiscos',
-      preco: 45.90,
-      emoji: '🎾'
-    },
-    {
-      id: 4,
-      nome: 'Cama Confort Plus',
-      descricao: 'Cama ortopédica tamanho médio',
-      preco: 129.90,
-      emoji: '🛏️'
-    },
-    {
-      id: 5,
-      nome: 'Coleira Premium',
-      descricao: 'Coleira ajustável com guia retrátil',
-      preco: 79.90,
-      emoji: '🎀'
-    },
-    {
-      id: 6,
-      nome: 'Casinha Impermeável',
-      descricao: 'Casinha plástica para médio porte',
-      preco: 249.90,
-      emoji: '🏠'
+        if (!response.ok) {
+            console.error(`❌ Erro HTTP! Status: ${response.status}. Verifique o caminho 'php/get_produtos.php'.`);
+            throw new Error('Erro ao carregar produtos do servidor.');
+        }
+
+        const data = await response.json();
+
+        if (data.success && Array.isArray(data.produtos)) {
+            produtosLoja = data.produtos;
+            console.log(`✅ Produtos carregados do MySQL: ${produtosLoja.length}`);
+        } else {
+            console.warn('Resposta do PHP inválida ou sem produtos.');
+        }
+
+    } catch (error) {
+        console.error('❌ Erro ao carregar produtos. Exibindo lista vazia.', error);
     }
-  ];
-  console.log('⚠️ Usando produtos padrão');
+
+    renderizarProdutos();
+    adicionarListenersProdutos();
 }
 
 function renderizarProdutos() {
-  const container = document.getElementById('products-grid');
-  
-  if (!container) return;
-  
-  container.innerHTML = '';
+    const container = document.getElementById('products-grid');
+    if (!container) return;
+    
+    container.innerHTML = '';
 
-  if (produtosLoja.length === 0) {
-    container.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1; padding: 40px;">Nenhum produto disponível no momento.</p>';
-    return;
-  }
+    // Definição das cores baseadas no Painel Admin (para uso inline)
+    const colorPetrol = '#006064';      // Azul Petróleo principal
+    const colorPetrolDark = '#004d40';  // Petróleo mais escuro (para hover, se for implementado)
+    const colorLightGray = '#f5f5f5';  // Cinza claro de fundo/botões
+    const colorTextDark = '#333333';   // Texto escuro
+    const colorPriceHighlight = '#e91e63'; // Destaque para o preço (magenta)
 
-  produtosLoja.forEach(produto => {
-    const produtoDiv = document.createElement('div');
-    produtoDiv.className = 'product-card';
-    produtoDiv.innerHTML = `
-      <div class="product-icon">${produto.emoji}</div>
-      <h3>${produto.nome}</h3>
-      <p>${produto.descricao}</p>
-      <div class="product-price">R$ ${produto.preco.toFixed(2)}</div>
-      <a href="https://wa.me/5562984580527?text=Olá! Tenho interesse no produto: ${encodeURIComponent(produto.nome)}" 
-         target="_blank" 
-         class="product-btn">
-        Comprar via WhatsApp
-      </a>
-    `;
-    container.appendChild(produtoDiv);
-  });
+    if (produtosLoja.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1; padding: 40px;">Nenhum produto disponível no momento.</p>';
+        return;
+    }
+
+    produtosLoja.forEach(produto => {
+        const precoFormatado = produto.preco.toFixed(2).replace('.', ',');
+        const produtoDiv = document.createElement('div');
+        
+        // Estilo inline para o CARD (Container principal)
+        produtoDiv.className = 'product-card'; 
+        produtoDiv.style.cssText = `
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease; /* Mantém a transição para possível hover via CSS externo */
+        `;
+
+        produtoDiv.innerHTML = `
+            <div class="product-image-container" style="height: 150px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                <img src="assets/produtos/${produto.img}" alt="${produto.nome}" class="product-img" 
+                     style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 8px;">
+            </div>
+            
+            <h3 style="color: ${colorPetrol}; font-size: 1.4rem; margin-bottom: 5px;">${produto.nome}</h3>
+            <p class="product-category" style="color: #999; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 10px;">${produto.category}</p>
+            <p class="product-description" style="color: ${colorTextDark}; font-size: 0.95rem; margin-bottom: 15px; flex-grow: 1;">${produto.description}</p>
+            <div class="product-price" style="font-size: 1.6rem; color: ${colorPriceHighlight}; font-weight: bold; margin-bottom: 15px;">R$ ${precoFormatado}</div>
+
+            <div class="product-actions" style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: auto;">
+                
+                <div class="quantity-selector" style="display: flex; align-items: center; border: none; border-radius: 6px; overflow: visible; width: 120px;">
+                    
+                    <button class="quantity-btn decrease-btn" data-action="decrease" 
+                            style="background: ${colorLightGray}; color: ${colorTextDark}; border: none; padding: 8px 12px; cursor: pointer; font-size: 1.1rem; transition: background 0.2s; border-radius: 6px 0 0 6px;">-</button>
+                    
+                    <input type="number" class="quantity-input" value="1" min="1" data-product-id="${produto.id}" readonly 
+                           style="width: 40px; text-align: center; border: none; font-size: 1rem; padding: 8px 0; outline: none;">
+                           
+                    <button class="quantity-btn increase-btn" data-action="increase" 
+                            style="background: ${colorLightGray}; color: ${colorTextDark}; border: none; padding: 8px 12px; cursor: pointer; font-size: 1.1rem; transition: background 0.2s; border-radius: 0 6px 6px 0;">+</button>
+                </div>
+                
+                <div class="add-to-cart-btn" data-product-name="${produto.nome}"
+                    style="width: 100%; padding: 10px 15px; border-radius: 6px; font-weight: bold; text-align: center; cursor: pointer; text-decoration: none; box-sizing: border-box; background-color: ${colorPetrol}; color: white; transition: background 0.3s ease;">
+                    Adicionar ao Carrinho
+                </div>
+            </div>
+        `;
+        container.appendChild(produtoDiv);
+    });
 }
 
+function adicionarListenersProdutos() {
+    // 1. Listeners para os botões de QUANTIDADE (+ e -)
+    document.querySelectorAll('.quantity-btn').forEach(button => {
+        if (button.hasAttribute('data-listener-added')) return;
+
+        button.addEventListener('click', function () {
+            const card = this.closest('.product-card');
+            const input = card.querySelector('.quantity-input');
+            let currentValue = parseInt(input.value) || 1;
+
+            if (this.classList.contains('increase-btn')) {
+                currentValue++;
+            } else if (this.classList.contains('decrease-btn')) {
+                currentValue = Math.max(1, currentValue - 1);
+            }
+            input.value = currentValue;
+        });
+        button.setAttribute('data-listener-added', 'true');
+    });
+}
+
+
 // ============================================
-// SISTEMA DE CALENDÁRIO
+// SISTEMA DE CALENDÁRIO (CORRIGIDO)
 // ============================================
 function gerarCalendario() {
   const mesAnoEl = document.getElementById('mesAno');
@@ -159,6 +182,11 @@ function gerarCalendario() {
       diaDiv.onclick = () => selecionarDia(dia, diaDiv);
     }
 
+    // Marca o dia selecionado se houver
+    if (dataSelecionada && dataSelecionada.getDate() === dia && dataSelecionada.getMonth() === mesAtual && dataSelecionada.getFullYear() === anoAtual) {
+         diaDiv.classList.add('selecionado');
+    }
+
     diasEl.appendChild(diaDiv);
   }
 
@@ -184,7 +212,7 @@ function mudarMes(direcao) {
   }
 
   // Limpa seleções
-  diaSelecionado = null;
+  dataSelecionada = null; // Limpa a data completa
   horarioSelecionado = null;
   
   const horariosSection = document.getElementById('horariosSection');
@@ -192,6 +220,10 @@ function mudarMes(direcao) {
   
   if (horariosSection) horariosSection.style.display = 'none';
   if (formAgendamento) formAgendamento.style.display = 'none';
+  
+  const dadosSelecionados = document.getElementById('dadosSelecionados');
+  if (dadosSelecionados) dadosSelecionados.innerHTML = '';
+
 
   gerarCalendario();
 }
@@ -204,7 +236,10 @@ function selecionarDia(dia, elemento) {
 
   // Adiciona nova seleção
   elemento.classList.add('selecionado');
-  diaSelecionado = dia;
+  
+  // CORREÇÃO ESSENCIAL: Armazena a data completa (Date Object)
+  dataSelecionada = new Date(anoAtual, mesAtual, dia);
+  
   horarioSelecionado = null;
 
   gerarHorarios();
@@ -259,10 +294,13 @@ function selecionarHorario(horario, elemento) {
     const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
                    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     
+    // CORREÇÃO: Usa dataSelecionada para formatar a data de exibição
+    const dataExibicao = dataSelecionada ? `${dataSelecionada.getDate()} de ${meses[dataSelecionada.getMonth()]} de ${dataSelecionada.getFullYear()}` : 'Não selecionada';
+    
     const dadosSelecionados = document.getElementById('dadosSelecionados');
     if (dadosSelecionados) {
       dadosSelecionados.innerHTML = `
-        <p>📅 Data: ${diaSelecionado} de ${meses[mesAtual]} de ${anoAtual}</p>
+        <p>📅 Data: ${dataExibicao}</p>
         <p>🕐 Horário: ${horarioSelecionado}</p>
       `;
     }
@@ -276,178 +314,190 @@ function selecionarHorario(horario, elemento) {
     }, 100);
   }
 }
+// ============================================
+// FUNÇÃO DE ENVIO PARA O BACKEND PHP (DB)
+// ============================================
+async function enviarAgendamentoParaPHP(nomeTutor, nomePet, telefone, servico, observacoes, data, horario) {
+    const formData = new FormData();
+
+    // O backend espera 6 dados do form + 1 (email placeholder)
+    // Os nomes das chaves (nome, telefone, servico, mensagem, data, horario) devem bater com o PHP
+    formData.append('nome', nomeTutor);
+    formData.append('telefone', telefone);
+    formData.append('servico', servico);
+    formData.append('mensagem', `Pet: ${nomePet}. Observações: ${observacoes}`); // União Pet + Obs
+    formData.append('data', data);
+    formData.append('horario', horario);
+
+    try {
+        // Caminho relativo correto
+        const caminhoPHP = 'php/processar_agendamento.php';
+
+        const response = await fetch(caminhoPHP, {
+            method: 'POST',
+            body: formData
+        });
+
+        // Tenta ler o JSON, mas se falhar, tenta ler o texto para debug
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Erro HTTP ${response.status}. Resposta do servidor: ${errorText}`);
+            throw new Error(`Erro HTTP ${response.status}. Verifique o PHP.`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log("✅ Agendamento salvo no MySQL.");
+            return true;
+        } else {
+            console.error("❌ Erro ao agendar no MySQL:", data.message);
+            mostrarAlerta(`❌ Falha ao salvar no DB: ${data.message}. Verifique a conexão com o banco de dados.`, 'erro');
+            return false;
+        }
+    } catch (error) {
+        console.error('❌ Erro de comunicação ou JSON inválido. Verifique o XAMPP e o caminho.', error);
+        mostrarAlerta(`❌ Erro de comunicação com o servidor! Verifique se o XAMPP está ligado e se processar_agendamento.php está na pasta 'php'.`, 'erro');
+        return false;
+    }
+}
+
 
 // ============================================
 // ENVIO DO FORMULÁRIO DE AGENDAMENTO
 // ============================================
-document.addEventListener('DOMContentLoaded', function() {
-  // Carrega produtos ao iniciar
-  carregarProdutos();
-  
-  // Gera calendário
-  gerarCalendario();
-  
-  const formAgendamento = document.getElementById('formulario-agendamento');
-  
-  if (formAgendamento) {
-    formAgendamento.addEventListener('submit', async function(e) {
-      e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+    carregarProdutos();
+    gerarCalendario();
 
-      if (!diaSelecionado || !horarioSelecionado) {
-        mostrarAlerta('❌ Por favor, selecione uma data e horário!', 'erro');
-        return;
-      }
+    const formAgendamento = document.getElementById('formulario-agendamento');
 
-      const nomeTutor = document.getElementById('nomeTutor').value.trim();
-      const nomePet = document.getElementById('nomePet').value.trim();
-      const telefone = document.getElementById('telefone').value.trim();
-      const servico = document.getElementById('servico').value;
-      const observacoes = document.getElementById('observacoes').value.trim();
+    if (formAgendamento) {
+        formAgendamento.addEventListener('submit', async function (e) {
+            e.preventDefault();
 
-      if (!nomeTutor || !nomePet || !telefone || !servico) {
-        mostrarAlerta('❌ Por favor, preencha todos os campos obrigatórios!', 'erro');
-        return;
-      }
+            // dataSelecionada (Objeto Date) agora é checada aqui
+            if (!dataSelecionada || !horarioSelecionado) { 
+                mostrarAlerta('❌ Por favor, selecione uma data e horário!', 'erro');
+                return;
+            }
 
-      const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            // 1. Coletar dados do formulário
+            const nomeTutor = document.getElementById('nomeTutor').value.trim();
+            const nomePet = document.getElementById('nomePet').value.trim();
+            const telefone = document.getElementById('telefone').value.trim();
+            const servico = document.getElementById('servico').value;
+            const observacoes = document.getElementById('observacoes').value.trim();
 
-      // Tenta salvar no backend (se disponível)
-      if (api) {
-        try {
-          const dataFormatada = `${anoAtual}-${String(mesAtual + 1).padStart(2, '0')}-${String(diaSelecionado).padStart(2, '0')}`;
-          
-          await api.criarAgendamento({
-            data: dataFormatada,
-            horario: horarioSelecionado,
-            tutor: nomeTutor,
-            pet: nomePet,
-            servico: servico,
-            telefone: telefone,
-            observacoes: observacoes
-          });
-          
-          console.log('✅ Agendamento salvo no banco de dados');
-        } catch (error) {
-          console.error('Erro ao salvar agendamento:', error);
-          // Continua mesmo se falhar, pois vai enviar por WhatsApp
-        }
-      }
+            if (!nomeTutor || !nomePet || !telefone || !servico) {
+                mostrarAlerta('❌ Por favor, preencha todos os campos obrigatórios!', 'erro');
+                return;
+            }
 
-      // Monta mensagem para WhatsApp
-      let mensagem = '*📅 AGENDAMENTO OSVALDO PETSHOP*%0A%0A';
-      mensagem += `*📆 Data:* ${diaSelecionado} de ${meses[mesAtual]} de ${anoAtual}%0A`;
-      mensagem += `*🕐 Horário:* ${horarioSelecionado}%0A%0A`;
-      mensagem += `*👤 Tutor:* ${nomeTutor}%0A`;
-      mensagem += `*🐾 Pet:* ${nomePet}%0A`;
-      mensagem += `*📱 Telefone:* ${telefone}%0A`;
-      mensagem += `*🛠️ Serviço:* ${servico}%0A`;
-      
-      if (observacoes) {
-        mensagem += `*📝 Observações:* ${observacoes}%0A`;
-      }
-      
-      mensagem += `%0A_Agendamento realizado pelo site_ ✅`;
+            // 2. Formatar Data (formato YYYY-MM-DD para o DB) - SÓ FUNCIONA COM dataSelecionada sendo um objeto Date
+            const dataFormatada = `${dataSelecionada.getFullYear()}-${String(dataSelecionada.getMonth() + 1).padStart(2, '0')}-${String(dataSelecionada.getDate()).padStart(2, '0')}`;
 
-      const numeroWhatsApp = '5562984580527';
-      const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+            // 3. Enviar para o PHP (DB)
+            const sucessoBD = await enviarAgendamentoParaPHP(
+                nomeTutor, nomePet, telefone, servico, observacoes, dataFormatada, horarioSelecionado
+            );
 
-      window.open(linkWhatsApp, '_blank');
+            // 4. Processa o resultado do banco de dados
+            if (sucessoBD) {
+                mostrarAlerta('✅ Agendamento salvo com sucesso no sistema! Você pode fechar esta página ou agendar outro horário.', 'sucesso');
 
-      // Limpa formulário
-      formAgendamento.reset();
-      diaSelecionado = null;
-      horarioSelecionado = null;
-      
-      document.querySelectorAll('.dia.selecionado, .horario.selecionado').forEach(el => {
-        el.classList.remove('selecionado');
-      });
+                // 5. Limpa e reseta o formulário
+                formAgendamento.reset();
 
-      const horariosSection = document.getElementById('horariosSection');
-      const dadosSelecionados = document.getElementById('dadosSelecionados');
-      
-      if (horariosSection) horariosSection.style.display = 'none';
-      if (formAgendamento) formAgendamento.style.display = 'none';
-      if (dadosSelecionados) dadosSelecionados.innerHTML = '';
+                // Reseta variáveis globais e UI
+                dataSelecionada = null;
+                horarioSelecionado = null;
 
-      mostrarAlerta('✅ Agendamento registrado! Redirecionando para o WhatsApp...', 'sucesso');
-    });
-  }
+                document.querySelectorAll('.dia.selecionado, .horario.selecionado').forEach(el => {
+                    el.classList.remove('selecionado');
+                });
+
+                const horariosSection = document.getElementById('horariosSection');
+                const dadosSelecionados = document.getElementById('dadosSelecionados');
+
+                if (horariosSection) horariosSection.style.display = 'none';
+                if (formAgendamento) formAgendamento.style.display = 'none';
+                if (dadosSelecionados) dadosSelecionados.innerHTML = '';
+
+                gerarCalendario(); // Regenera o calendário
+
+            }
+        });
+    }
 });
 
+
 // ============================================
-// SISTEMA DE ALERTAS
+// SISTEMA DE ALERTAS E SCROLL SUAVE (AJAX)
 // ============================================
 function mostrarAlerta(mensagem, tipo) {
-  const alertaExistente = document.getElementById('alerta-customizado');
-  if (alertaExistente) {
-    alertaExistente.remove();
-  }
-
-  const cores = {
-    sucesso: { bg: '#4caf50', texto: '#fff' },
-    erro: { bg: '#f44336', texto: '#fff' },
-    info: { bg: '#2196f3', texto: '#fff' }
-  };
-
-  const cor = cores[tipo] || cores.info;
-
-  const alerta = document.createElement('div');
-  alerta.id = 'alerta-customizado';
-  alerta.innerHTML = `
-    <div style="position: fixed; top: 20px; right: 20px; z-index: 10000;
-                background: ${cor.bg}; color: ${cor.texto}; 
-                padding: 20px; border-radius: 10px; 
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                max-width: 350px; animation: slideIn 0.3s ease;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <span style="white-space: pre-line;">${mensagem}</span>
-        <button onclick="this.closest('#alerta-customizado').remove()" 
-                style="background: none; border: none; color: ${cor.texto}; 
-                       font-size: 18px; cursor: pointer; margin-left: 10px;">✕</button>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(alerta);
-
-  setTimeout(() => {
-    if (document.getElementById('alerta-customizado')) {
-      document.getElementById('alerta-customizado').remove();
+    // ... (Código da função mostrarAlerta permanece o mesmo) ...
+    const alertaExistente = document.getElementById('alerta-customizado');
+    if (alertaExistente) {
+        alertaExistente.remove();
     }
-  }, 5000);
-}
 
-// Adiciona animação CSS
+    const cores = {
+        sucesso: { bg: '#4caf50', texto: '#fff' },
+        erro: { bg: '#f44336', texto: '#fff' },
+        info: { bg: '#2196f3', texto: '#fff' }
+    };
+
+    const cor = cores[tipo] || cores.info;
+
+    const alerta = document.createElement('div');
+    alerta.id = 'alerta-customizado';
+    alerta.innerHTML = `
+        <div style="position: fixed; top: 20px; right: 20px; z-index: 10000;
+                    background: ${cor.bg}; color: ${cor.texto}; 
+                    padding: 20px; border-radius: 10px; 
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    max-width: 350px; animation: slideIn 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <span style="white-space: pre-line;">${mensagem}</span>
+                <button onclick="this.closest('#alerta-customizado').remove()" 
+                        style="background: none; border: none; color: ${cor.texto}; 
+                               font-size: 18px; cursor: pointer; margin-left: 10px;">✕</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(alerta);
+
+    setTimeout(() => {
+        if (document.getElementById('alerta-customizado')) {
+            document.getElementById('alerta-customizado').remove();
+        }
+    }, 5000);
+}
+// Adiciona animação CSS se ainda não existir
 if (!document.getElementById('animacao-alerta')) {
-  const style = document.createElement('style');
-  style.id = 'animacao-alerta';
-  style.textContent = `
+    const style = document.createElement('style');
+    style.id = 'animacao-alerta';
+    style.textContent = `
     @keyframes slideIn {
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
   `;
-  document.head.appendChild(style);
+    document.head.appendChild(style);
 }
 
-// ============================================
-// SCROLL SUAVE PARA ÂNCORAS
-// ============================================
+// Scroll suave para âncoras
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  });
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
 });
-
-console.log('📊 Status da aplicação:');
-console.log('- Produtos carregados:', produtosLoja.length);
-console.log('- API disponível:', api ? 'Sim' : 'Não');
-console.log('- Sistema pronto!');
