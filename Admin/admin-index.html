@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Osvaldo PetShop</title>
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+  <!-- Tela de Login -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-header">
+      <h1>🔐 Área Administrativa</h1>
+      <p>Osvaldo PetShop</p>
+    </div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Usuário</label>
+        <input type="text" id="username" placeholder="Digite seu usuário" required>
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha" required>
+      </div>
+      <button type="submit" class="btn-login">Entrar</button>
+    </form>
+    <p class="login-hint">💡 Usuário: admin | Senha: admin123</p>
+  </div>
+
+  <!-- Painel Administrativo -->
+  <div class="admin-container" id="adminContainer">
+    <!-- Header -->
+    <div class="admin-header">
+      <h1>📊 Painel Administrativo</h1>
+      <div class="header-actions">
+        <span class="welcome-text">Bem-vindo, <strong id="adminName">Admin</strong></span>
+        <button class="btn-logout" onclick="logout()">Sair</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <div class="tab active" onclick="showTab('produtos')">
+        🛍️ Produtos
+      </div>
+      <div class="tab" onclick="showTab('agendamentos')">
+        📅 Agendamentos
+      </div>
+      <div class="tab" onclick="showTab('integracao')">
+        🔗 Integrações
+      </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="admin-content">
+      <!-- Tab Produtos -->
+      <div class="tab-content active" id="produtos-tab">
+        <div class="produtos-header">
+          <h2>Gerenciar Produtos</h2>
+          <button class="btn-add" onclick="abrirModalProduto()">
+            + Adicionar Produto
+          </button>
+        </div>
+        <div class="produtos-grid" id="produtosGrid"></div>
+      </div>
+
+      <!-- Tab Agendamentos -->
+      <div class="tab-content" id="agendamentos-tab">
+        <div class="agendamentos-header">
+          <h2>Calendário de Agendamentos</h2>
+          <div class="calendar-actions">
+            <button class="btn-sync" onclick="sincronizarGoogle()">
+              🔄 Sincronizar com Google Calendar
+            </button>
+            <button class="btn-export" onclick="exportarAgendamentos()">
+              📥 Exportar Agendamentos
+            </button>
+          </div>
+        </div>
+
+        <div class="calendario-admin">
+          <div class="calendario-header">
+            <button onclick="mudarMesAdmin(-1)">◀ Anterior</button>
+            <h3 id="mesAnoAdmin"></h3>
+            <button onclick="mudarMesAdmin(1)">Próximo ▶</button>
+          </div>
+          
+          <div class="calendario-dias">
+            <div class="dia-label">Dom</div>
+            <div class="dia-label">Seg</div>
+            <div class="dia-label">Ter</div>
+            <div class="dia-label">Qua</div>
+            <div class="dia-label">Qui</div>
+            <div class="dia-label">Sex</div>
+            <div class="dia-label">Sáb</div>
+          </div>
+          
+          <div class="calendario-dias" id="diasCalendarioAdmin"></div>
+        </div>
+
+        <div class="agendamentos-lista" id="agendamentosLista">
+          <h3>Agendamentos do Dia Selecionado</h3>
+          <div id="agendamentosDetalhes"></div>
+        </div>
+      </div>
+
+      <!-- Tab Integrações -->
+      <div class="tab-content" id="integracao-tab">
+        <div class="integracoes-container">
+          <h2>Integrações Externas</h2>
+          
+          <div class="integracao-card">
+            <div class="integracao-icon">📆</div>
+            <div class="integracao-info">
+              <h3>Google Calendar</h3>
+              <p>Sincronize automaticamente os agendamentos com sua agenda do Google</p>
+              <div class="integracao-status" id="googleStatus">
+                <span class="status-badge desconectado">Desconectado</span>
+              </div>
+            </div>
+            <button class="btn-connect" onclick="conectarGoogleCalendar()">
+              Conectar
+            </button>
+          </div>
+
+          <div class="integracao-card">
+            <div class="integracao-icon">💳</div>
+            <div class="integracao-info">
+              <h3>Mercado Pago</h3>
+              <p>Integre pagamentos online para produtos e serviços</p>
+              <div class="integracao-status">
+                <span class="status-badge desconectado">Desconectado</span>
+              </div>
+            </div>
+            <button class="btn-connect" onclick="conectarMercadoPago()">
+              Conectar
+            </button>
+          </div>
+
+          <div class="integracao-card">
+            <div class="integracao-icon">📧</div>
+            <div class="integracao-info">
+              <h3>Email Marketing</h3>
+              <p>Envie newsletters e promoções para seus clientes</p>
+              <div class="integracao-status">
+                <span class="status-badge desconectado">Desconectado</span>
+              </div>
+            </div>
+            <button class="btn-connect" onclick="conectarEmail()">
+              Conectar
+            </button>
+          </div>
+
+          <div class="config-google-calendar">
+            <div class="form-group">
+              <label>Client ID</label>
+              <input type="text" id="googleClientId" placeholder="Cole seu Client ID do Google">
+            </div>
+            <div class="form-group">
+              <label>API Key</label>
+              <input type="text" id="googleApiKey" placeholder="Cole sua API Key do Google">
+            </div>
+            <button class="btn-save" onclick="salvarConfigGoogle()">
+              Salvar Configurações
+            </button>
+            <p class="help-text">
+              📘 <a href="https://console.cloud.google.com/" target="_blank">Obter credenciais do Google</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Produto -->
+  <div class="modal" id="modalProduto">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Adicionar Produto</h2>
+        <span class="modal-close" onclick="fecharModalProduto()">✕</span>
+      </div>
+      <form id="formProduto">
+        <input type="hidden" id="produtoId">
+        
+        <div class="form-group">
+          <label>Emoji do Produto</label>
+          <input type="text" id="produtoEmoji" placeholder="🐶" maxlength="2" required>
+        </div>
+
+        <div class="form-group">
+          <label>Nome do Produto*</label>
+          <input type="text" id="produtoNome" placeholder="Ex: Ração Premium" required>
+        </div>
+
+        <div class="form-group">
+          <label>Descrição*</label>
+          <textarea id="produtoDescricao" placeholder="Descreva o produto..." rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Preço (R$)*</label>
+          <input type="number" id="produtoPreco" placeholder="0.00" step="0.01" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label>Categoria</label>
+          <select id="produtoCategoria">
+            <option value="racao">Ração</option>
+            <option value="brinquedos">Brinquedos</option>
+            <option value="acessorios">Acessórios</option>
+            <option value="higiene">Higiene</option>
+            <option value="camas">Camas e Casinhas</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="produtoAtivo" checked>
+            Produto ativo (visível na loja)
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="fecharModalProduto()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-save">
+            Salvar Produto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Detalhes Agendamento -->
+  <div class="modal" id="modalAgendamento">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📅 Detalhes do Agendamento</h2>
+        <span class="modal-close" onclick="fecharModalAgendamento()">✕</span>
+      </div>
+      <div id="agendamentoDetalhes"></div>
+    </div>
+  </div>
+
+  <script src="admin-script.js"></script>
+</body>
+</html>

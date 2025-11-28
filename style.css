@@ -1,32 +1,19 @@
-/* Botão flutuante do WhatsApp */
-.whatsapp-float {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 30px;
-  right: 30px;
-  background-color: #25d366;
-  color: #fff;
-  border-radius: 50%;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: box-shadow 0.2s;
-}
-
-.whatsapp-float:hover {
-  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
-  background-color: #20ba5a;
-}
-
 /* Estilo geral */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #60c2b8;
   color: #333;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 header {
@@ -277,6 +264,140 @@ nav a:hover {
 
 /* Produtos - Layout Diferenciado */
 .produtos {
+  /* Fundo neutro após remover o gradiente rosa antigo */
+  background: white; 
+  padding: 60px 20px;
+}
+
+.products-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* * ATENÇÃO: 
+ * Estilos de produtos agora estão INLINE no script.js 
+ * para maior controle dinâmico.
+ */
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff3e0;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #e68900;
+}
+
+.contato {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  text-align: center;
+}
+
+.contato h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.contato p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.contato-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.contato-info {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: left;
+}
+
+.contato-info h3 {
+  color: #60c2b8;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contato-info p {
+  margin: 12px 0;
+  color: #333;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.info-destaque {
+  margin-top: 30px;
+  padding: 20px;
+  background: #e3f2fd;
+  border-radius: 10px;
+  border-left: 4px solid #2196f3;
+}
+
+.info-destaque h4 {
+  color: #1976d2;
+  margin-bottom: 15px;
+}
+
+.info-destaque ol {
+  margin-left: 20px;
+  color: #333;
+}
+
+.info-destaque li {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.contato-agendamento {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 500px;
+  max-width: 700px;
+}
+
+.contato-agendamento h3 {
+  color: #60c2b8;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Produtos - Layout Diferenciado */
+.produtos {
   background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
   padding: 60px 20px;
 }
@@ -305,98 +426,195 @@ nav a:hover {
   border-radius: 2px;
 }
 
-.products-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
+/* Calendário */
+.calendario {
+  margin-bottom: 30px;
 }
 
-.product-card {
-  background: white;
-  border-radius: 15px;
-  padding: 25px 20px;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.product-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(135deg, #e91e63, #ad1457);
+.calendario-header button {
+  background: #60c2b8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
 }
 
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+.calendario-header button:hover {
+  background: #4a9d96;
 }
 
-.product-icon {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-  display: block;
-}
-
-.product-card h3 {
+.calendario-header h4 {
   font-size: 1.3rem;
   color: #333;
-  margin-bottom: 10px;
-  font-weight: 600;
 }
 
-.product-card p {
+.calendario-dias {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.dia-label {
+  text-align: center;
+  font-weight: bold;
   color: #666;
-  font-size: 0.95rem;
-  margin-bottom: 15px;
-}
-
-.product-btn {
-  background: linear-gradient(135deg, #e91e63, #ad1457);
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 20px;
+  padding: 10px;
   font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
 }
 
-.product-btn:hover {
-  background: linear-gradient(135deg, #ad1457, #880e4f);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
-}
-
-.cards {
+.dia {
+  aspect-ratio: 1;
   display: flex;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.card {
-  background: #fff3e0;
-  padding: 20px;
-  width: 250px;
+  border: 2px solid #e0e0e0;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  background: white;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  background: #e68900;
+.dia:hover:not(.disabled):not(.outro-mes) {
+  background: #e3f2fd;
+  border-color: #60c2b8;
+}
+
+.dia.selecionado {
+  background: #60c2b8;
+  color: white;
+  border-color: #60c2b8;
+}
+
+.dia.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.dia.outro-mes {
+  opacity: 0.3;
+  color: #999;
+  cursor: default;
+}
+
+/* Horários Disponíveis */
+.horarios-disponiveis {
+  margin-top: 30px;
+}
+
+.horarios-disponiveis h4 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.horario {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  background: white;
+}
+
+.horario:hover {
+  background: #e3f2fd;
+  border-color: #60c2b8;
+}
+
+.horario.selecionado {
+  background: #60c2b8;
+  color: white;
+  border-color: #60c2b8;
+}
+
+/* Formulário de Contato */
+.contato-form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contato-form h4 {
+  color: #60c2b8;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.dados-selecionados {
+  background: #e8f5e9;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border-left: 4px solid #4caf50;
+}
+
+.dados-selecionados p {
+  margin: 5px 0;
+  color: #2e7d32;
+  font-weight: bold;
+  text-align: left;
+}
+
+input,
+textarea,
+select,
+button {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #60c2b8;
+  box-shadow: 0 0 0 3px rgba(96, 194, 184, 0.1);
+}
+
+select {
+  cursor: pointer;
+}
+
+.form-button {
+  background: linear-gradient(135deg, #60c2b8, #4a9d96);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.form-button:hover {
+  background: linear-gradient(135deg, #4a9d96, #3d8078);
+  box-shadow: 0 8px 25px rgba(96, 194, 184, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Contato */
@@ -412,15 +630,6 @@ form {
   max-width: 400px;
   margin: auto;
   gap: 10px;
-}
-
-input,
-textarea,
-button {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
 }
 
 button {
@@ -612,44 +821,7 @@ body {
   text-align: center;
 }
 
-input,
-textarea,
-select,
-button {
-  padding: 12px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: #60c2b8;
-  box-shadow: 0 0 0 3px rgba(96, 194, 184, 0.1);
-}
-
-select {
-  cursor: pointer;
-}
-
-button {
-  background: linear-gradient(135deg, #60c2b8 0%, #4a9d96 100%);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-button:hover {
-  background: linear-gradient(135deg, #4a9d96 0%, #3d8078 100%);
-  box-shadow: 0 8px 25px rgba(96, 194, 184, 0.3);
-  transform: translateY(-2px);
-}
+/* Os estilos de input, textarea, select e button foram movidos para a área de Agendamento */
 
 /* Responsividade atualizada */
 @media (max-width: 768px) {
@@ -692,11 +864,10 @@ button:hover {
   }
 
   .section-header h2,
-  .produtos-header h2,
   .contato h2 {
     font-size: 2.2rem;
   }
-
+  
   .services-grid,
   .products-grid {
     grid-template-columns: 1fr;
@@ -731,20 +902,8 @@ button:hover {
     font-size: 2rem;
   }
 
-  .whatsapp-float {
-    width: 50px;
-    height: 50px;
-    bottom: 20px;
-    right: 20px;
-  }
-
   .service-card,
   .product-card {
     padding: 20px 15px;
-  }
-
-  .whatsapp-float img {
-    width: 40px !important;
-    height: 40px !important;
   }
 }
